@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +45,25 @@ public class EmployeeController {
 	@GetMapping("/getEmployee")
 	public Optional<Employee> getEmployee(@RequestParam Integer id) {
 		return employeeService.getEmployee(id);
+	}
+	
+	@DeleteMapping("/deleteEmployee/{id}")
+	public ResponseEntity<Employee> deleteEmployee(@PathVariable Integer id) {
+		ResponseEntity<Employee> responseEntity=new ResponseEntity<>(HttpStatus.OK);
+		try {
+		employeeService.deleteEmployee(id);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			responseEntity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+		
+	}
+	
+	@DeleteMapping("/deleteAllEmployees")
+	public void deleteAllEmployees() {
+		employeeService.deleteAllEmployees();
 	}
 }
