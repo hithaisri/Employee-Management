@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,5 +66,10 @@ public class EmployeeController {
 	@DeleteMapping("/deleteAllEmployees")
 	public void deleteAllEmployees() {
 		employeeService.deleteAllEmployees();
+	}
+	
+	@PutMapping("/updateEmployee/{id}")
+	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee,@PathVariable Integer id) {
+		return new	ResponseEntity<Employee>(employeeService.updateEmployee(employee, id),HttpStatus.OK);
 	}
 }
